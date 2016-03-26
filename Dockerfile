@@ -1,6 +1,8 @@
 # vim:set ft=dockerfile:
 FROM ruby:2.2
 
+MAINTAINER operations@osmfoundation.org
+
 RUN apt-get update -qq && apt-get install -y libmagickwand-dev libxml2-dev libxslt1-dev nodejs nodejs-legacy npm libpq-dev libsasl2-dev imagemagick postgresql-client --no-install-recommends
 
 WORKDIR /app

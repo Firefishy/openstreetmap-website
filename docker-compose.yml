@@ -19,6 +19,13 @@ services:
      - data-images:/rails/gpx/images
      - data-attachments:/rails/attachments
 
+  cgimap:
+    image: openstreetmap/openstreetmap-cgimap
+    links:
+     - db
+     - memcached
+    restart: always
+
   db:
     build:
       context: .
@@ -28,9 +35,11 @@ services:
      - "5432"
     volumes:
      - data-db:/var/lib/postgresql/data
+    restart: always
 
   memcached:
     image: memcached:1
+    restart: always
 
 volumes:
   data-db: {}
