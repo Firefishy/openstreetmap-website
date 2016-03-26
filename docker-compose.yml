@@ -20,7 +20,7 @@ services:
      - data-attachments:/rails/attachments
 
   cgimap:
-    image: openstreetmap/openstreetmap-cgimap
+    image: openstreetmap/cgimap
     links:
      - db
      - memcached
