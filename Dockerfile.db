@@ -1,0 +1,13 @@
+# vim:set ft=dockerfile:
+FROM postgres:9.1
+
+RUN apt-get update -qq && apt-get install -y make postgresql-server-dev-9.1 gcc --no-install-recommends
+
+WORKDIR /app
+
+COPY db/functions/ ./db/functions/
+COPY lib/quad_tile/ ./lib/quad_tile/
+
+RUN cd db/functions/ && make
+
+COPY script/docker/init-user-db.sh /docker-entrypoint-initdb.d/osm-init-user-db.sh

@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    image: openstreetmap/openstreetmap-website
+    ports:
+     - "3000:3000"
+    links:
+     - db
+     - memcached
+    environment:
+     - DB_USER=openstreetmap
+     - DB_PASSWORD=openstreetmap
+     - DB_NAME=openstreetmap
+     - DB_HOST=db
+    volumes:
+     - data-traces:/rails/gpx/traces
+     - data-images:/rails/gpx/images
+     - data-attachments:/rails/attachments
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    image: openstreetmap/openstreetmap-website-db
+    ports:
+     - "5432"
+    volumes:
+     - data-db:/var/lib/postgresql/data
+
+  memcached:
+    image: memcached:1
+
+volumes:
+  data-db: {}
+  data-traces: {}
+  data-images: {}
+  data-attachments: {}

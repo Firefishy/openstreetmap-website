@@ -1,8 +1,8 @@
-FROM ruby:2.3
+# vim:set ft=dockerfile:
+FROM ruby:2.2
 
-RUN apt-get update -qq && apt-get install -y libmagickwand-dev libxml2-dev libxslt1-dev nodejs nodejs-legacy npm libpq-dev libsasl2-dev imagemagick --no-install-recommends
+RUN apt-get update -qq && apt-get install -y libmagickwand-dev libxml2-dev libxslt1-dev nodejs nodejs-legacy npm libpq-dev libsasl2-dev imagemagick postgresql-client --no-install-recommends
 
-RUN mkdir -p /app
 WORKDIR /app
 
 # Copy the Gemfile as well as the Gemfile.lock and install
@@ -17,8 +17,8 @@ RUN npm install -g svgo
 
 # Copy the main application.
 COPY . ./
-COPY config/example.database.yml ./config/database.yml
-COPY config/example.application.yml ./config/application.yml
+COPY config/docker.database.yml ./config/database.yml
+COPY config/docker.application.yml ./config/application.yml
 
 ENV RAILS_ENV development
 ENV RACK_ENV development
