@@ -49,3 +49,8 @@ RUN bundle install
 COPY package.json yarn.lock /app/
 COPY bin/yarn /app/bin/
 RUN bundle exec bin/yarn install
+
+# Workaround for gd2-ffij: https://github.com/dark-panda/gd2-ffij/pull/28
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
